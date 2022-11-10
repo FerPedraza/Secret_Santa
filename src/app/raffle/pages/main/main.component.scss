@@ -1,0 +1,28 @@
+.container{
+    width: 100%;
+    display: flex;
+  flex-flow: row wrap;
+  height: 100%;
+
+}
+
+.sidenav{
+    width: 40px;
+    height: 100% ;
+    background: #DADBD4;/**/
+}
+.content-container{
+    flex-grow: 1;
+    padding: 30px;
+}
+.wrapper > * {
+    padding: 10px;
+    flex: 1 100%;
+  }
+.header{
+  padding: 5px;
+  padding-top: 12px;
+  padding-bottom: 3px;
+  text-align: center;
+  background-color: #4A664E;;
+}

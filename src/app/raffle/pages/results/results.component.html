@@ -1,0 +1,25 @@
+<mat-card >
+    <div>
+      <h2>Results</h2>
+      <div class="subheading-2">
+          Happy Holidays
+      </div>    
+    </div>
+    <div class="columns">
+  
+        <mat-list role="list">
+          <mat-list-item *ngFor="let pair of raffle" role="listitem">{{pair.givingPerson}} -> {{pair.receivingPerson}}</mat-list-item>
+        </mat-list>
+        
+  
+    </div>
+  
+    <div class="buttons" >
+
+        <button mat-button (click)="back()">
+          Back
+        </button> 
+      </div>
+  </mat-card>
+  
+  

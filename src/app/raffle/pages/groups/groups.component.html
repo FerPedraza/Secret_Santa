@@ -1,0 +1,65 @@
+<mat-card >
+    <div>
+      <h2>Groups</h2>
+      <div class="subheading-2">
+          Select the people who belong to then group, write a name and click on add button. To continue without groups press next
+      </div>    
+    </div>
+    <div class="columns">
+  
+      <div class="column-input">
+        <form class="form" [formGroup]="groupNameForm" #formDirective="ngForm" (ngSubmit)="onSubmit(selectedPeople, formDirective)" >
+            <mat-form-field appearance="fill" class="input-field">
+              <mat-label>Group name</mat-label>
+              <input type="text" matInput id="name" formControlName="name" >
+              
+              <mat-error *ngIf="groupNameForm.controls.name.hasError('required')">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <button mat-mini-fab type="submit">
+              <mat-icon>add</mat-icon>
+            </button>    
+        </form>
+
+
+        <mat-list>
+            <ng-container *ngFor="let group of groups">
+                <mat-list-item>{{group.name}}</mat-list-item>
+                <mat-list style="margin-left:30px;">
+                    <div *ngFor="let person of group.people">
+                        <mat-list-item>{{ person.name }}</mat-list-item>
+                    </div>
+                </mat-list>
+            </ng-container>
+        </mat-list>
+
+        
+  
+      </div>
+      <div class="column-people">
+        <mat-selection-list #selectePeople [(ngModel)]="selectedPeople" (ngModelChange)="onNgModelChange($event)">
+            <mat-list-option color="primary" *ngFor="let person of people" [value]="person">
+              {{person.name}}
+            </mat-list-option>
+          </mat-selection-list>
+          
+          <p>
+            Participants selected: {{selectePeople.selectedOptions.selected.length}}
+          </p>
+
+      </div> 
+        
+  
+    </div>
+  
+    <div class="buttons" >
+
+      <button mat-button (click)="back()">
+        Back
+      </button> 
+      <button mat-button (click)="next()">
+        Next
+      </button> 
+    </div>
+  </mat-card>
