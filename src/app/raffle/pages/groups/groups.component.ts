@@ -22,23 +22,23 @@ export class GroupsComponent implements OnInit {
   constructor(private _raffleService: RaffleService, private _router: Router) { }
   
   ngOnInit(): void {
-    this.people = this._raffleService.getPeople();
+    
+    this.people = Object.create(this._raffleService.getPeople());
+    
   }
   next(){
-
-    this._raffleService.addGroups(this.groups);
-    var raffleRequest: RaffleRequest = {
-      People: this._raffleService.getPeople(),
-      Groups: this._raffleService.getGroups()};
-    this._raffleService.addReq(raffleRequest);
     
+    this._raffleService.addGroups(this.groups);
     this._router.navigateByUrl('main/results');
 
   }
   back(){
+    this.people = [];
+    this.groups = [];
     this._router.navigateByUrl('main/people');
   }
   onSubmit(selectedPeople: any, formDirective: FormGroupDirective){
+     //this.people = Object.create(this._raffleService.getPeople());
     if(this.groupNameForm.valid){
       if(this.groups.find((obj)=>{
         return obj.name == this.groupNameForm.value.name;
@@ -47,13 +47,12 @@ export class GroupsComponent implements OnInit {
         this.groupNameForm.reset();  
         this.groupNameForm.controls.name.reset();  
         formDirective.resetForm();
-        console.log(this.selectedPeople);
-        console.log(this.people);
-
         this.selectedPeople.forEach( (itemSelected, indexSelected) => {
-          this.people.forEach((item,index) =>{
+          this.people.forEach((item: { name: string; },index: any) =>{
             if(itemSelected.name == item.name){
               this.people.splice(index,1);
+              console.log(this.people);
+              console.log(this._raffleService.getPeople());
 
             }
           });

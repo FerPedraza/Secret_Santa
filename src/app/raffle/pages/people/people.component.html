@@ -2,7 +2,7 @@
   <div>
     <h2>Participants</h2>
     <div class="subheading-2">
-        Enter the groups of people that cannot be assigned between group members, to continue without groups press next
+        Enter the name of people that whould be on the draw, to continue without groups press next
     </div>    
   </div>
   <div class="columns">
@@ -25,9 +25,13 @@
 
     </div>
     <div class="column-people">
-      <mat-list role="list">
-        <mat-list-item *ngFor="let person of people" role="listitem">{{person.name}}</mat-list-item>
-      </mat-list>
+      <mat-card >
+        <mat-card-subtitle>Participants</mat-card-subtitle>
+        <mat-list role="list">
+          <mat-list-item *ngFor="let person of people" role="listitem">{{person.name}}</mat-list-item>
+        </mat-list>
+      </mat-card>
+        
     </div>
       
 

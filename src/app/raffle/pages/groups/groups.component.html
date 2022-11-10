@@ -22,17 +22,21 @@
             </button>    
         </form>
 
+        <mat-card *ngIf="groups.length >0">
+          <mat-card-subtitle>Groups</mat-card-subtitle>
+          <mat-list>
+              <ng-container *ngFor="let group of groups">
+                  <mat-list-item>{{group.name}}</mat-list-item>
+                  Group members
+                  <mat-list style="margin-left:30px;">
+                      <div *ngFor="let person of group.people">
+                          <mat-list-item>{{ person.name }}</mat-list-item>
+                      </div>
+                  </mat-list>
+              </ng-container>
+          </mat-list>
 
-        <mat-list>
-            <ng-container *ngFor="let group of groups">
-                <mat-list-item>{{group.name}}</mat-list-item>
-                <mat-list style="margin-left:30px;">
-                    <div *ngFor="let person of group.people">
-                        <mat-list-item>{{ person.name }}</mat-list-item>
-                    </div>
-                </mat-list>
-            </ng-container>
-        </mat-list>
+        </mat-card>
 
         
   

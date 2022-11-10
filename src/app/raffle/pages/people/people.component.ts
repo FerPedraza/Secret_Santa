@@ -19,6 +19,7 @@ export class PeopleComponent implements OnInit {
   constructor(private _raffleService: RaffleService, private _router: Router) { }
 
   ngOnInit(): void {
+
   }
 
   onSubmit(formData: any, formDirective: FormGroupDirective){
@@ -44,6 +45,7 @@ export class PeopleComponent implements OnInit {
      
   }
   next(){
+    this._raffleService.addPeople([]);
     this._raffleService.addPeople(this.people);
     this._router.navigateByUrl('main/groups');
   }

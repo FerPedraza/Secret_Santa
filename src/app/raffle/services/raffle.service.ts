@@ -5,19 +5,19 @@ import { Group, Person, RaffleRequest } from '../interfaces/raffle';
   providedIn: 'root'
 })
 export class RaffleService {
-  people: Person[] = [];
-  groups: Group[] = [];
-  req: RaffleRequest = {People:[],Groups: []};
+  private people: Person[] = [];
+  private groups: Group[] = [];
+  private req: RaffleRequest = {People:[],Groups: []};
 
   constructor() { }
   addPeople(people: Person[]) {
-    this.people = [...this.people,...people];
+    this.people = people;
   }
   getPeople() {
     return this.people;
   }
   addGroups(groups: Group[]) {
-    this.groups = [...this.groups,...groups];
+    this.groups = groups;
   }
   getGroups() {
     return this.groups;
