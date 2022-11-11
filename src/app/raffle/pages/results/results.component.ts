@@ -16,6 +16,9 @@ export class ResultsComponent implements OnInit {
   raffle: RaffleSequence[] = [];
   people: Person[] = [];
   groups: Group[] = [];
+  displayedColumns: string[] = ['giving', 'icon', 'receiving'];
+  dataSource: RaffleSequence[] = [];
+  loading: boolean = true;
   constructor(private _httpService: HttpService, private _raffleService: RaffleService,
     private _router: Router) { }
 
@@ -23,7 +26,6 @@ export class ResultsComponent implements OnInit {
     this._raffleService.selectedPeople$.subscribe((value) => {
       if(!(Object.keys(value).length === 0)){
         this.people = value;
-      
       }
     });
 
@@ -34,10 +36,34 @@ export class ResultsComponent implements OnInit {
     });
     this._httpService.request<RaffleResponse>('POST','api/raffle',{People: this.people,
       Groups: this.groups
-    }).subscribe(res => {
-      console.log(res); 
+    }).subscribe(
+      res => { 
+      if(res.code != 0){
+        Swal.fire({
+          title: 'Something went wrong, try again later',
+          text: res.message,
+          icon: 'warning',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#3a7e44'
+        }).then(() => {
+          this.clean();
+        });
+      }
       this.raffle = res.data.raffleSequence;
-      
+      this.dataSource = this.raffle;
+      if(this.raffle.length > 0){
+        this.loading = false;
+      }
+    }, error => {
+      Swal.fire({
+        title: 'Oh oh!',
+        text: 'Something went wrong, try again later',
+        icon: 'warning',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#3a7e44'
+      }).then(() => {
+        this.clean();
+      });
     });
 
     if(this.people.length < 2){
@@ -57,8 +83,10 @@ export class ResultsComponent implements OnInit {
     this._raffleService.setPeople([]);
     this._router.navigateByUrl('main/people');
   }
-  save(){
-
+  back(){
+    this.people = [];
+    this.groups = [];
+    this._router.navigateByUrl('main/groups');
   }
 
 }
