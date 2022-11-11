@@ -32,8 +32,8 @@
               <mat-icon>add</mat-icon>
             </button>    
         </form>
-
-        <mat-card *ngIf="groups.length >0">
+<div class="card-list">
+<mat-card *ngIf="groups.length >0" >
           <mat-card-title>Groups</mat-card-title>
           <mat-list >
               <ng-container *ngFor="let group of groups; let indexGroup = index" class="list">
@@ -71,6 +71,11 @@
           </mat-list>
 
         </mat-card>
+
+
+
+</div>
+        
       </div>
     </div>
   

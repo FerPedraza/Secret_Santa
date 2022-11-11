@@ -23,28 +23,6 @@ export class RaffleService {
   setGroups(groups: Group[]) {
     this.groups$.next(groups);
   }
-/*
-
-
-  addPeople(people: Person[]) {
-    this.people = people;
-  } 
-  getPeople() {
-    return this.people;
-  }
-  addGroups(groups: Group[]) {
-    this.groups = groups;
-  }
-  getGroups() {
-    return this.groups;
-  }
-  addReq(req: RaffleRequest) {
-    this.req = req;
-  }
-  getReq() {
-    return this.req;
-  }*/
-  
 
 
 }
