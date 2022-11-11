@@ -6,7 +6,18 @@
       </div>    
     </div>
     <div class="columns">
-  
+      <div class="column-people">
+        <mat-selection-list #selectePeople [(ngModel)]="selectedPeople" (ngModelChange)="onNgModelChange($event)">
+            <mat-list-option color="primary" *ngFor="let person of people" [value]="person">
+              {{person.name}}
+            </mat-list-option>
+          </mat-selection-list>
+          
+          <p>
+            Participants selected: {{selectePeople.selectedOptions.selected.length}}
+          </p>
+
+      </div> 
       <div class="column-input">
         <form class="form" [formGroup]="groupNameForm" #formDirective="ngForm" (ngSubmit)="onSubmit(selectedPeople, formDirective)" >
             <mat-form-field appearance="fill" class="input-field">
@@ -23,38 +34,44 @@
         </form>
 
         <mat-card *ngIf="groups.length >0">
-          <mat-card-subtitle>Groups</mat-card-subtitle>
-          <mat-list>
-              <ng-container *ngFor="let group of groups">
-                  <mat-list-item>{{group.name}}</mat-list-item>
-                  Group members
+          <mat-card-title>Groups</mat-card-title>
+          <mat-list >
+              <ng-container *ngFor="let group of groups; let indexGroup = index" class="list">
+                <div class="list">
+                  <div><strong>Name: </strong> {{ group.name}}</div>
+                  <div class="spacer"></div>
+                  <div>
+                    <button mat-mini-fab class="remove-btn" (click)="removeGroup(indexGroup)">
+                      <mat-icon>remove</mat-icon>
+                    </button>   
+                  </div>
+                </div>  
+                  
+                  <strong> Group members:</strong>  
                   <mat-list style="margin-left:30px;">
-                      <div *ngFor="let person of group.people">
+                    
+                      <div *ngFor="let person of group.people; let indexPeople = index">
+                        <div class="list">
                           <mat-list-item>{{ person.name }}</mat-list-item>
+                          <div class="spacer"></div>
+                          <div>
+                            <button mat-mini-fab class="remove-btn" (click)="removePeople(indexGroup,indexPeople)"
+                            [disabled]="group.people.length < 3"
+                            >
+                              <mat-icon>remove</mat-icon>
+                            </button>   
+                          </div>
+                        </div> 
+
+                          
                       </div>
                   </mat-list>
+                  
               </ng-container>
           </mat-list>
 
         </mat-card>
-
-        
-  
       </div>
-      <div class="column-people">
-        <mat-selection-list #selectePeople [(ngModel)]="selectedPeople" (ngModelChange)="onNgModelChange($event)">
-            <mat-list-option color="primary" *ngFor="let person of people" [value]="person">
-              {{person.name}}
-            </mat-list-option>
-          </mat-selection-list>
-          
-          <p>
-            Participants selected: {{selectePeople.selectedOptions.selected.length}}
-          </p>
-
-      </div> 
-        
-  
     </div>
   
     <div class="buttons" >

@@ -7,6 +7,30 @@
   </div>
   <div class="columns">
 
+    <div class="column-people">
+      <mat-card >
+        <mat-card-subtitle>Participants</mat-card-subtitle>
+        
+        <mat-list role="list" *ngIf="people.length > 0" >
+          <div *ngFor="let person of people; let indexPerson = index" class="list">
+            <div>
+              {{person.name}}</div>
+            <div class="spacer"></div>
+            <div>
+              <button mat-mini-fab class="remove-btn" (click)="remove(indexPerson)">
+                <mat-icon>remove</mat-icon>
+              </button>   
+            </div>
+  
+          </div>
+          
+        </mat-list>
+        <p *ngIf="people.length == 0">
+          There are no participants yet. 
+        </p>
+      </mat-card>
+        
+    </div>
     <div class="column-input">
       <form class="form" [formGroup]="nameForm" #formDirective="ngForm" (ngSubmit)="onSubmit(nameForm, formDirective)" >
         <mat-form-field appearance="fill" class="input-field">
@@ -23,15 +47,6 @@
       </form>
       
 
-    </div>
-    <div class="column-people">
-      <mat-card >
-        <mat-card-subtitle>Participants</mat-card-subtitle>
-        <mat-list role="list">
-          <mat-list-item *ngFor="let person of people" role="listitem">{{person.name}}</mat-list-item>
-        </mat-list>
-      </mat-card>
-        
     </div>
       
 

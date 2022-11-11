@@ -19,10 +19,16 @@ export class PeopleComponent implements OnInit {
   constructor(private _raffleService: RaffleService, private _router: Router) { }
 
   ngOnInit(): void {
-
+    this._raffleService.selectedPeople$.subscribe((value) => {
+    if(!(Object.keys(value).length === 0)){
+      this.people = value;
+    
+    }
+    });
   }
 
   onSubmit(formData: any, formDirective: FormGroupDirective){
+    if(!(Object.keys(this.people).length === 0)){
     if(this.nameForm.valid){
       if(this.people.find((obj)=>{
         return obj.name == this.nameForm.value.name;
@@ -42,11 +48,19 @@ export class PeopleComponent implements OnInit {
         });
       }
     }
+    }else{
+      this.people.push({name: this.nameForm.value.name!, id: 0});
+      this.nameForm.reset();  
+      this.nameForm.controls.name.reset();  
+      formDirective.resetForm();
+    }
      
   }
   next(){
-    this._raffleService.addPeople([]);
-    this._raffleService.addPeople(this.people);
+    this._raffleService.setPeople(this.people);
     this._router.navigateByUrl('main/groups');
+  }
+  remove(indexPerson: number){
+    this.people.splice(indexPerson,1);
   }
 }

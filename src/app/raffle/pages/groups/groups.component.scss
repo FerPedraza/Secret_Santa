@@ -1,5 +1,26 @@
 
+
 .form{
+    display: flex;
+    justify-content: flex-end;
+    button{
+        margin-top: 6px;
+        margin-left: 8px;
+    }
+    margin-right: 100px;
+}
+
+.remove-btn{
+    height:25px !important;
+    width:25px !important;
+    mat-icon{
+        position: absolute;
+        top: 1px !important;
+        left: 0px !important;
+    }
+}
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option mat-list-item{
+    height: 25px;
 }
 .columns{
     display: flex;
@@ -22,9 +43,19 @@
     justify-content: flex-start;
     width:60%; 
     display: inline-block;
-    ;
+    mat-card{
+        width: 80%;
+    }
     
 }
+
+.list{
+    display: flex;
+}
+
+.spacer {
+    flex-grow: 1;
+  }
 .buttons{
     display: flex;
     width: 100%;
@@ -32,7 +63,9 @@
     justify-content: flex-end;
     bottom: 10px;
     margin: 3px;
+    margin-top: 15px;
     color: aliceblue;
+    gap: 10px;
 }
 .mat-button.mat-primary .mat-button-focus-overlay .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, 
 .mat-fab.mat-accent, .mat-mini-fab.mat-accent, .mat-button, .mat-icon-button, .mat-stroked-button {

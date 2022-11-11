@@ -1,8 +1,32 @@
 
 .form{
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
+    button{
+        margin-top: 6px;
+        margin-left: 8px;
+    }
+    margin-right: 100px;
 }
+.remove-btn{
+    height:25px !important;
+    width:25px !important;
+    mat-icon{
+        position: absolute;
+        top: 1px !important;
+        left: 0px !important;
+    }
+}
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option mat-list-item{
+    height: 25px;
+}
+.list{
+    display: flex;
+}
+
+.spacer {
+    flex-grow: 1;
+  }
 .columns{
     display: flex;
     align-items: flex-start;
@@ -28,8 +52,11 @@
     width: 100%;
     flex-wrap: wrap;
     justify-content: flex-end;
-    color: aliceblue;
     bottom: 10px;
+    margin: 3px;
+    margin-top: 15px;
+    color: aliceblue;
+    gap: 10px;
 }
 .mat-button.mat-primary .mat-button-focus-overlay .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, 
 .mat-fab.mat-accent, .mat-mini-fab.mat-accent, .mat-button, .mat-icon-button, .mat-stroked-button {

@@ -19,7 +19,7 @@ const routes: Routes = [
       path: 'results',
       component: ResultsComponent,
     },
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: 'people' }
     ]
   }
 ];

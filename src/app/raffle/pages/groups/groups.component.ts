@@ -16,19 +16,39 @@ export class GroupsComponent implements OnInit {
   people: Person[] = [];
   groups: Group[] = [];
   selectedPeople: Person[] = [];
+  peopleLength: number = 0;
   groupNameForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
   });
   constructor(private _raffleService: RaffleService, private _router: Router) { }
   
   ngOnInit(): void {
-    
-    this.people = Object.create(this._raffleService.getPeople());
-    
+    this._raffleService.selectedPeople$.subscribe((value) => {
+      if(!(Object.keys(value).length === 0)){
+        this.people = Object.create(value);
+        this.peopleLength = this.people.length;
+      }
+    });
+    this._raffleService.selectedGroups$.subscribe((value) => {
+      if(!(Object.keys(value).length === 0)){
+        this.groups = value;
+      }
+    });
+    if(this.people.length < 2){
+      Swal.fire({
+        title: 'Oh oh!',
+        text: 'There must be at least two people to carry out the draw',
+        icon: 'warning',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#3a7e44'
+      }).then(() => {
+        this._router.navigate(['main/people']);
+      });
+    }
   }
   next(){
-    
-    this._raffleService.addGroups(this.groups);
+    this._raffleService.setGroups(this.groups);
+
     this._router.navigateByUrl('main/results');
 
   }
@@ -38,8 +58,17 @@ export class GroupsComponent implements OnInit {
     this._router.navigateByUrl('main/people');
   }
   onSubmit(selectedPeople: any, formDirective: FormGroupDirective){
-     //this.people = Object.create(this._raffleService.getPeople());
-    if(this.groupNameForm.valid){
+    if(this.selectedPeople.length > this.peopleLength/2){
+      Swal.fire({
+        title: 'Oh oh!',
+        text: 'The number of members in a group is too large for the draw',
+        icon: 'warning',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#3a7e44'
+      });
+      return;
+    }
+    if(this.groupNameForm.valid && this.selectedPeople.length > 1){
       if(this.groups.find((obj)=>{
         return obj.name == this.groupNameForm.value.name;
       })==undefined){
@@ -51,8 +80,6 @@ export class GroupsComponent implements OnInit {
           this.people.forEach((item: { name: string; },index: any) =>{
             if(itemSelected.name == item.name){
               this.people.splice(index,1);
-              console.log(this.people);
-              console.log(this._raffleService.getPeople());
 
             }
           });
@@ -68,9 +95,36 @@ export class GroupsComponent implements OnInit {
           confirmButtonColor: '#3a7e44'
         });
       }
+    }else{
+      Swal.fire({
+        title: 'Oh oh!',
+        text: 'Groups must have at least 2 members ',
+        icon: 'warning',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#3a7e44'
+      });
     }
 
   }
+  removeGroup(index: number){
+    this.groups[index].people.forEach(item =>{
+      this.people.push(item);
+    });
+
+    this.groups.splice(index,1);
+
+  }
+  removePeople(indexG: number,indexP: number){
+    
+      
+    this.people.push(this.groups[indexG].people[indexP]);
+
+    this.groups[indexG].people.splice(indexP,1);
+
+  }
+
+
+  
   onNgModelChange(d: any){
 
   }
